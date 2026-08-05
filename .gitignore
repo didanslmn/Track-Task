@@ -1,0 +1,27 @@
+# Environment variables (jangan commit secret)
+.env
+.env.*
+!.env.example
+
+# Go build output & binaries
+/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Dependency directories (jika nanti pakai vendor)
+/vendor/
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Migration binary (golang-migrate CLI, jika diunduh lokal)
+migrate
+migrate.exe
