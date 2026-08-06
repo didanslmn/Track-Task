@@ -19,15 +19,13 @@ type Meta struct {
 }
 
 type SuccessResponse struct {
-	Success bool   `json:"success"`
 	Message string `json:"message,omitempty"`
 	Data    any    `json:"data,omitempty"`
 	Meta    *Meta  `json:"meta,omitempty"`
 }
 
 type ErrorResponse struct {
-	Success bool              `json:"success"`
-	Error   ErrorResponseItem `json:"error"`
+	Error ErrorResponseItem `json:"error"`
 }
 
 type ErrorResponseItem struct {
@@ -57,30 +55,26 @@ func WriteJSON(w http.ResponseWriter, statusCode int, body any) {
 // -----------------------------
 func Success(w http.ResponseWriter, data any) {
 	WriteJSON(w, http.StatusOK, &SuccessResponse{
-		Success: true,
-		Data:    data,
+		Data: data,
 	})
 }
 
 func SuccessWithMessage(w http.ResponseWriter, message string) {
 	WriteJSON(w, http.StatusOK, &SuccessResponse{
-		Success: true,
 		Message: message,
 	})
 }
 
 func SuccessWithMeta(w http.ResponseWriter, data any, meta *Meta) {
 	WriteJSON(w, http.StatusOK, &SuccessResponse{
-		Success: true,
-		Data:    data,
-		Meta:    meta,
+		Data: data,
+		Meta: meta,
 	})
 }
 
 func Created(w http.ResponseWriter, data any) {
 	WriteJSON(w, http.StatusCreated, &SuccessResponse{
-		Success: true,
-		Data:    data,
+		Data: data,
 	})
 }
 
@@ -99,7 +93,6 @@ func Error(w http.ResponseWriter, err error) {
 	}
 
 	WriteJSON(w, appErr.HTTPStatus, &ErrorResponse{
-		Success: false,
 		Error: ErrorResponseItem{
 			Code:    string(appErr.Code),
 			Message: appErr.Message,
@@ -110,7 +103,6 @@ func Error(w http.ResponseWriter, err error) {
 
 func ErrorWithStatus(w http.ResponseWriter, statusCode int, code string, message string) {
 	WriteJSON(w, statusCode, ErrorResponse{
-		Success: false,
 		Error: ErrorResponseItem{
 			Code:    code,
 			Message: message,
