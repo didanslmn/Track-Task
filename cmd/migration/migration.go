@@ -7,6 +7,7 @@ import (
 	"math"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strconv"
 
 	"teamtask-api/internal/config"
@@ -55,7 +56,11 @@ func run() error {
 	if migrationDir == "" {
 		migrationDir = "migrations"
 	}
-	sourceURL := fmt.Sprintf("file://%s", migrationDir)
+	absMigrationDir, err := filepath.Abs(migrationDir)
+	if err != nil {
+		return fmt.Errorf("failed to resolve absolute path for migration dir: %w", err)
+	}
+	sourceURL := fmt.Sprintf("file://%s", filepath.ToSlash(absMigrationDir))
 
 	// 5. Inisialisasi migrate
 	m, err := migrate.New(sourceURL, dbURL)
