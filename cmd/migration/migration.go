@@ -54,7 +54,7 @@ func run() error {
 	// 4. Buat path migration bisa dikonfigurasi via environment
 	migrationDir := os.Getenv("MIGRATION_PATH")
 	if migrationDir == "" {
-		migrationDir = "migrations"
+		migrationDir = "internal/database/migrations"
 	}
 	absMigrationDir, err := filepath.Abs(migrationDir)
 	if err != nil {
